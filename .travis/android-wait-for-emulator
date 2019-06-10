@@ -9,7 +9,7 @@ timeout_in_sec=360
 
 # sys.boot_completed > init.svc.bootanim
 # For one, Activity and Package managers may not have started yet...
-while [ "`adb shell getprop sys.boot_completed | tr -d '\r' `" != "1" ] ; do
+while [ "`$ADB shell getprop sys.boot_completed | tr -d '\r' `" != "1" ] ; do
   let "failcounter += 1"
   echo "$0: Waiting for emulator to start ($failcounter)"
   if [[ $failcounter -gt timeout_in_sec ]]; then

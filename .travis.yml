@@ -61,7 +61,7 @@ install:
 
 script:
   - ./gradlew :assembleAndroidTest
-  - ./.travis/start_android_emulator.sh
+  - ./.travis/start_android_emulator.sh || travis_terminate 1
   - ./gradlew :connectedAndroidTest
 
 before_cache:

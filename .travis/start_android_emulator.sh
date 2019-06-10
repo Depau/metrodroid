@@ -13,7 +13,7 @@ ${EMULATOR} -avd "emu" \
     ${EMULATOR_ARGS} &
 
 echo "** Waiting for emulator..."
-./.travis/android-wait-for-emulator || travis_terminate
+./.travis/android-wait-for-emulator || exit 1
 
 echo "** Connected devices:"
 ${ADB} devices
