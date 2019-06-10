@@ -27,9 +27,9 @@ check_exists "$EMULATOR"
 check_exists "$EMULATOR_DIR"
 check_exists "$EMULATOR_DIR/system.img"
 
-if ! [[ -e "${EMULATOR_DIR}/kernel-ranchu" ]]
+if ! [[ -e "${EMULATOR_DIR}/kernel-ranchu" || -e "${EMULATOR_DIR}/kernel-ranchu-64" ]]
 then
-    echo "** ERROR: Missing kernel-ranchu for this target!"
+    echo "** ERROR: Missing kernel-ranchu(-64) for this target!"
     echo ""
     echo "This system image will not work on Emulator v29+. This is a bug in"
     echo "Android emulator system images."
@@ -56,7 +56,4 @@ ${EMULATOR} -avd "${AVD_NAME}" \
     -no-snapstorage \
     ${EMULATOR_ARGS} &
 
-echo "** Waiting for emulator..."
-./.travis/android-wait-for-emulator
-
-${ADB} shell input keyevent 82 &
+# We can start building while the emulator boots.

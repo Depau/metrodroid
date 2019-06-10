@@ -25,10 +25,6 @@ env:
     # Pointless in CI.
     - QEMU_AUDIO_DRV=none
 
-    # Disable the daemon -- we only run Gradle once. This ensures that all of its files are
-    # properly unlocked for caching.
-    - GRADLE_OPTS=-Dorg.gradle.daemon=false
-
 jobs:
   include:
     # This only runs "assemble", which compiles the code and runs non-Android unit tests. This is
@@ -59,7 +55,23 @@ jobs:
     - env: EMULATOR_API=28 EMULATOR_ARCH=x86 EMULATOR_ARGS=-no-accel
     - env: EMULATOR_API=28 EMULATOR_ARCH=x86_64 EMULATOR_ARGS=-no-accel
 
+install:
+  - ./.travis/install_android_sdk.sh
+  - ./.travis/android_emulator.sh
+
+script:
+  # This takes a few minutes, so we can do this while waiting for an emulator.
+  - ./gradlew assemble
+
+  # Check that the emulator is ready for us.
+  - ./.travis/android_wait.sh
+
+  # Now run the emulator-side tests.
+  - ./gradlew connectedAndroidTest
+
 before_cache:
+  - ./gradlew --stop
+
   # Gradle, general files
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
   - rm -fr $HOME/.gradle/caches/journal-1/
@@ -95,7 +107,3 @@ cache:
     - $HOME/android-sdk/emulator
     - $HOME/android-sdk/platform-tools
     - $HOME/android-sdk/system-images/android-$EMULATOR_API/default/$EMULATOR_ARCH
-
-install:
-  - ./.travis/install_android_sdk.sh
-  - ./.travis/android_emulator.sh
