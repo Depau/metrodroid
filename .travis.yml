@@ -57,17 +57,12 @@ jobs:
 
 install:
   - ./.travis/install_android_sdk.sh
-  - ./.travis/android_emulator.sh
+  - ./.travis/install_android_emulator.sh
 
 script:
-  # This takes a few minutes, so we can do this while waiting for an emulator.
-  - ./gradlew assemble
-
-  # Check that the emulator is ready for us.
-  - ./.travis/android_wait.sh
-
-  # Now run the emulator-side tests.
-  - ./gradlew connectedAndroidTest
+  - ./gradlew :assembleAndroidTest
+  - ./.travis/start_android_emulator.sh
+  - ./gradlew :connectedAndroidTest
 
 before_cache:
   - ./gradlew --stop

@@ -5,7 +5,6 @@ source ./.travis/utils.sh
 
 EMULATOR_TARGET="system-images;android-${EMULATOR_API};${EMULATOR_FLAVOUR};${EMULATOR_ARCH}"
 EMULATOR_DIR="${ANDROID_SDK_ROOT}/system-images/android-${EMULATOR_API}/${EMULATOR_FLAVOUR}/${EMULATOR_ARCH}"
-AVD_NAME="emu${RANDOM}"
 
 android_install \
     "emulator" \
@@ -42,18 +41,4 @@ fi
 
 echo "** Creating AVD for Android ${EMULATOR_API} on ${EMULATOR_ARCH}..."
 # Do you wish to create a custom hardware profile? [no]
-echo "no" | ${AVDMANAGER} create avd -n "${AVD_NAME}" -k "${EMULATOR_TARGET}" -f || exit 1
-
-echo "** Starting emulator in background..."
-${EMULATOR} -avd "${AVD_NAME}" \
-    -no-skin \
-    -no-window \
-    -no-boot-anim \
-    -gpu swiftshader_indirect \
-    -camera-back none \
-    -camera-front none \
-    -no-snapshot-save \
-    -no-snapstorage \
-    ${EMULATOR_ARGS} &
-
-# We can start building while the emulator boots.
+echo "no" | ${AVDMANAGER} create avd -n "emu" -k "${EMULATOR_TARGET}" -f || exit 1
