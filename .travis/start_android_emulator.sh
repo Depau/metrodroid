@@ -15,4 +15,7 @@ ${EMULATOR} -avd "emu" \
 echo "** Waiting for emulator..."
 ./.travis/android-wait-for-emulator
 
+echo "adb = ${ADB}"
 ${ADB} shell input keyevent 82 &
+
+${ADB} devices
