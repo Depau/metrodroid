@@ -21,5 +21,9 @@ ${ADB} devices
 echo "** Device kernel:"
 ${ADB} shell uname -a
 
+echo "** Device info:"
+${ADB} shell am get-config
+${ADB} shell adb getprop ro.build.version.release 
+
 echo "** Device features:"
 ${ADB} shell pm list features
