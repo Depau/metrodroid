@@ -45,7 +45,16 @@ echo "** Creating AVD for Android ${EMULATOR_API} on ${EMULATOR_ARCH}..."
 echo "no" | ${AVDMANAGER} create avd -n "${AVD_NAME}" -k "${EMULATOR_TARGET}" -f || exit 1
 
 echo "** Starting emulator in background..."
-${EMULATOR} -avd "${AVD_NAME}" -no-skin -no-window ${EMULATOR_ARGS} &
+${EMULATOR} -avd "${AVD_NAME}" \
+    -no-skin \
+    -no-window \
+    -no-boot-anim \
+    -gpu swiftshader_indirect \
+    -camera-back none \
+    -camera-front none \
+    -no-snapshot-save \
+    -no-snapstorage \
+    ${EMULATOR_ARGS} &
 
 echo "** Waiting for emulator..."
 ./.travis/android-wait-for-emulator
