@@ -13,7 +13,7 @@ ${EMULATOR} -avd "emu" \
     ${EMULATOR_ARGS} &
 
 echo "** Waiting for emulator..."
-./.travis/android-wait-for-emulator
+./.travis/android-wait-for-emulator || travis_terminate
 
 echo "** Connected devices:"
 ${ADB} devices
@@ -23,7 +23,7 @@ ${ADB} shell uname -a
 
 echo "** Device info:"
 ${ADB} shell am get-config
-${ADB} shell adb getprop ro.build.version.release 
+${ADB} shell getprop ro.build.version.release
 
 echo "** Device features:"
 ${ADB} shell pm list features
