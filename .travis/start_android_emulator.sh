@@ -4,11 +4,6 @@ echo "** Starting emulator in background..."
 ${EMULATOR} -avd "emu" \
     -no-skin \
     -no-window \
-    -gpu swiftshader_indirect \
-    -camera-back none \
-    -camera-front none \
-    -no-snapshot-save \
-    -no-snapstorage \
     ${EMULATOR_ARGS} &
 
 echo "** Waiting for emulator..."
