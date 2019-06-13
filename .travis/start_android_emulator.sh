@@ -17,6 +17,9 @@ echo "** Waiting for emulator..."
 echo "** Connected devices:"
 ${ADB} devices
 
+${ADB} shell input keyevent 82 &
+sleep 2s
+
 echo "** Device kernel:"
 ${ADB} shell uname -a
 
